@@ -5,12 +5,20 @@ import { useForm } from "../hooks/useForm";
 
 export const FormWithCustomHook = () => {
 
-  const { onResetForm, onInputChange, onTestRut, username, email, password, rut } = useForm({
-    username: 'Tbvl',
-    rut: '20.848.321-8',
-    email: 'cristobal@tbvl.cl',
+  const { formState, onResetForm, onInputChange, validateRut, username, email, rut } = useForm({
+    username: 'test',
+    rut: '12.123.123-1',
+    email: 'email@test.cl',
     password: ''
   });
+
+  const onValidateRut = (rut) => {
+    if (validateRut(rut)){
+      console.log('rut valido');
+      return;
+    }
+    console.log('rut invalido');
+  }
   // lo de abajo se reemplaza por el retorno del spread del formulario en el hook
   // const { username, email, password } = formState;
 
@@ -19,8 +27,8 @@ export const FormWithCustomHook = () => {
     
       <h1>Formulario con Custom Hook</h1>
       <hr />
-
-      <input 
+      <form>      
+        <input 
         type="text"
         className="form-control"
         placeholder="Username"
@@ -28,36 +36,30 @@ export const FormWithCustomHook = () => {
         value={ username }
         onChange = { onInputChange } />
 
-      <input 
-        type="text"
-        className="form-control mt-2"
-        placeholder="12.345.678-9"
-        name="rut"
-        value={ rut }
-        onChange = { onInputChange } />
+        <input 
+          type="text"
+          className="form-control mt-2"
+          placeholder="12.345.678-9"
+          name="rut"
+          value={ rut }
+          onChange = { onInputChange } />
 
-      <input 
-        type="email"
-        className="form-control mt-2"
-        placeholder="email@email.com"
-        name="email"
-        value= { email }
-        onChange = { onInputChange } />
+        <input 
+          type="email"
+          className="form-control mt-2"
+          placeholder="email@email.com"
+          name="email"
+          value= { email }
+          onChange = { onInputChange } />
 
-      <input 
-        type="password"
-        className="form-control mt-2"
-        placeholder="password"
-        name="password"
-        value= { password }
-        onChange = { onInputChange } />
+      </form>
 
       <button onClick= { onResetForm } className="btn btn-primary mt-3">Reset</button>
-      <button onClick= { onTestRut } className="btn btn-primary mt-3">Formatear Rut</button>
+      <button onClick= { onValidateRut(formState.rut) } className="btn btn-primary mt-3">Validate RUT</button>
 
       
       {
-        username === 'Tbvl2' && <Message/>
+        username === 'testuser2' && <Message/>
       }
     </>
   )

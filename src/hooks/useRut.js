@@ -1,19 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export const useRut = ( formState, setFormState ) => {
 
-  const [rut, setRut] = useState(formState.rut);
+  const rut = formState.rut;
   
   const rut_to_number = (rut) => {
     const rut_to_number = rut.replace(/[^kK\d]/g,'');
     return rut_to_number;
   };
 
-  const onTestRut = () => {
-    setRut('123456');
-  }
+  
   
   const onFormatRut = () => {
+      
     
     if (rut_to_number(rut).length >= 8 && rut_to_number(rut).length <= 13 ) {
       
@@ -34,18 +33,19 @@ export const useRut = ( formState, setFormState ) => {
   }
 
   const onRutChange = () => {
-    console.log('rut cambio (onRutChange)');
+    // console.log('rut cambio (onRutChange)');
   }
   
   useEffect(() => {
     onRutChange();
-    console.log('rut cambio (useEffect)');
+    onFormatRut();
+    // console.log('rut cambio (useEffect)');
   
   }, [rut]);
 
 
   return {
     rut,
-    onTestRut,
+    onFormatRut,
   }
 }
